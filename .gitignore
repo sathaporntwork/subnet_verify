@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+gui-test-screenshots/
+.zcode/
+*.local
+.DS_Store
+.eslintcache
+*.tsbuildinfo
+npm-debug.log*

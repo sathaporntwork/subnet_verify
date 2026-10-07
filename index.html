@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Verify and fix IP subnet prefixes in your browser — IPv4 & IPv6, one prefix per line. 100% client-side."
+    />
+    <meta name="theme-color" content="#050507" />
+    <meta property="og:title" content="Subnet Verify" />
+    <meta
+      property="og:description"
+      content="Paste subnet prefixes, verify them, and apply one-click fixes — entirely client-side."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Subnet Verify — Prefix Checker</title>
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--1"></span>
+      <span class="aurora__blob aurora__blob--2"></span>
+      <span class="aurora__blob aurora__blob--3"></span>
+    </div>
+    <div class="noise" aria-hidden="true"></div>
+
+    <main class="shell">
+      <header class="hero">
+        <p class="hero__badge"><span class="hero__dot" aria-hidden="true"></span>Subnet Verify</p>
+        <h1>Check every prefix.<br />Fix the broken ones.</h1>
+        <p class="hero__sub">
+          Paste IP subnets below — one prefix per line. Verify spots host bits that should be zero,
+          netmask notation, and malformed input, then offers one-click corrections.
+        </p>
+      </header>
+
+      <section class="card card--editor" aria-labelledby="editor-title">
+        <div class="card__head">
+          <h2 id="editor-title">Prefixes</h2>
+          <span class="count" id="entry-count">0 entries</span>
+          <div class="toolbar">
+            <button type="button" class="btn btn--sm" id="btn-sample">Sample</button>
+            <button type="button" class="btn btn--sm" id="btn-import">Import .txt</button>
+            <button type="button" class="btn btn--sm btn--ghost-danger" id="btn-clear">
+              Clear
+            </button>
+          </div>
+        </div>
+        <label class="visually-hidden" for="prefix-input">Subnet prefixes, one per line</label>
+        <textarea
+          id="prefix-input"
+          class="input"
+          spellcheck="false"
+          autocomplete="off"
+          autocapitalize="off"
+          placeholder="192.168.1.0/24&#10;10.0.0.1 255.255.0.0&#10;2001:db8::/32"
+        ></textarea>
+        <div class="card__foot">
+          <p class="hint">
+            1 prefix per line · CIDR or netmask · IPv4 &amp; IPv6 · <kbd>Ctrl</kbd>+<kbd>↵</kbd> to
+            verify
+          </p>
+          <button type="button" class="btn btn--primary btn--lg" id="btn-verify">Verify</button>
+        </div>
+      </section>
+
+      <section class="card card--results" id="results-card" aria-labelledby="results-title" hidden>
+        <div class="card__head">
+          <h2 id="results-title">Results</h2>
+          <div class="chips" id="summary-chips" role="status"></div>
+        </div>
+        <ol class="results" id="results-list"></ol>
+        <div class="card__foot card__foot--actions" id="results-actions"></div>
+      </section>
+
+      <footer class="foot">
+        <p>100% client-side — your prefixes never leave the browser.</p>
+      </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status"></div>
+    <input type="file" id="file-import" accept=".txt,text/plain" hidden />
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
