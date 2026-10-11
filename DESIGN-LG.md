@@ -98,6 +98,29 @@ Below are the default base tokens (**Obsidian Silver**):
   --shadow-card:
     0 28px 70px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.14),
     inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+
+  /* ambient gradient and sweeping light beams */
+  --bg-gradient:
+    radial-gradient(900px 620px at 88% -12%, rgba(255, 255, 255, 0.09), transparent 62%),
+    radial-gradient(760px 560px at -14% 32%, rgba(174, 186, 210, 0.08), transparent 58%),
+    radial-gradient(720px 640px at 55% 118%, rgba(120, 132, 158, 0.09), transparent 62%),
+    radial-gradient(460px 320px at 5% 0%, rgba(255, 255, 255, 0.12), transparent 62%),
+    linear-gradient(165deg, var(--bg-1) 0%, #0b0d13 45%, var(--bg-0) 100%);
+  --beam-1: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3) 35%,
+    rgba(226, 233, 245, 0.44) 52%,
+    rgba(255, 255, 255, 0.22) 68%,
+    transparent
+  );
+  --beam-2: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2) 38%,
+    rgba(203, 212, 228, 0.3) 55%,
+    transparent
+  );
 }
 ```
 
@@ -212,10 +235,14 @@ Silver gradient text for display headings:
 
 ## 4. Ambient background stack
 
-Four fixed layers, back to front: `.bg` (z `-3`, gradients + beams) → `.aurora` (z `-2`) →
-`.noise` (z `-1`) → content. All layers are `position: fixed` and `pointer-events: none` — this
-replaces `background-attachment: fixed`, which repaints poorly on mobile and breaks full-page
-screenshots.
+Four fixed layers, front to back: `.shell` content (z `1`) → `.noise` (z `0`) → `.aurora`
+(z `0`) → `.bg` (z `0`, gradients + beams). All ambient layers are `position: fixed`,
+`pointer-events: none`, and sit at **z-index 0 with the content wrapper at z-index 1** — never
+negative: some embedded compositors (in-app browsers / webviews) drop negative-z fixed layers
+entirely, which silently hides the whole ambience. This also replaces
+`background-attachment: fixed`, which repaints poorly on mobile.
+
+> **Atmospheric layering:** Beams are constructed as wide angled ribbons (`.bg::before`, `.bg::after`) with `filter: blur(42px)` and smooth linear-gradient transitions, drifting across the screen via subtle transform animations. Ambient `.aurora` blobs provide organic background illumination.
 
 ```html
 <div class="bg" aria-hidden="true"></div>
@@ -231,68 +258,83 @@ screenshots.
 .bg {
   position: fixed;
   inset: 0;
-  z-index: -3;
+  z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(900px 620px at 88% -12%, rgba(255, 255, 255, 0.09), transparent 62%),
-    radial-gradient(760px 560px at -14% 32%, rgba(174, 186, 210, 0.08), transparent 58%),
-    radial-gradient(720px 640px at 55% 118%, rgba(120, 132, 158, 0.09), transparent 62%),
-    radial-gradient(460px 320px at 5% 0%, rgba(255, 255, 255, 0.12), transparent 62%),
-    linear-gradient(165deg, var(--bg-1) 0%, #0b0d13 45%, var(--bg-0) 100%);
+  background: var(--bg-gradient);
+  transition: background 0.4s ease;
 }
 
-/* Sweeping light beams — blurred gradient bars. */
+.shell {
+  position: relative;
+  z-index: 1; /* content sits above all ambient layers */
+}
+```
+
+Light beams — wide soft ribbons (top-left, bottom-right) angled diagonally across the viewport with blur feathering. The wide ribbons (24vw/20vw height) create an expansive, luxurious wash across the header and bottom edge. Smooth transform drift glides the beam slowly across the viewport:
+
+```css
 .bg::before,
 .bg::after {
   content: '';
   position: absolute;
   filter: blur(42px);
-  opacity: 0.4;
+  opacity: 0.42;
   pointer-events: none;
+  transition: background 0.4s ease;
 }
 
 .bg::before {
-  width: 95vw;
-  height: 20vw;
+  width: 105vw;
+  height: 24vw;
+  min-height: 280px;
   left: -20vw;
   top: -6vw;
   transform: rotate(-22deg);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3) 35%,
-    rgba(226, 233, 245, 0.44) 52%,
-    rgba(255, 255, 255, 0.22) 68%,
-    transparent
-  );
+  background: var(--beam-1);
+  animation: beamDriftTop 16s ease-in-out infinite alternate;
 }
 
 .bg::after {
-  width: 85vw;
-  height: 16vw;
+  width: 95vw;
+  height: 20vw;
+  min-height: 230px;
   right: -18vw;
   bottom: 0;
   transform: rotate(-18deg);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2) 38%,
-    rgba(203, 212, 228, 0.3) 55%,
-    transparent
-  );
-  opacity: 0.32;
+  background: var(--beam-2);
+  opacity: 0.34;
+  animation: beamDriftBottom 20s ease-in-out infinite alternate;
+  animation-delay: -8s;
+}
+
+@keyframes beamDriftTop {
+  from {
+    transform: rotate(-22deg) translate3d(-3vw, -1.5vh, 0);
+  }
+  to {
+    transform: rotate(-22deg) translate3d(3vw, 1.5vh, 0);
+  }
+}
+
+@keyframes beamDriftBottom {
+  from {
+    transform: rotate(-18deg) translate3d(-2vw, 1.5vh, 0);
+  }
+  to {
+    transform: rotate(-18deg) translate3d(2vw, 1.5vh, 0);
+  }
 }
 ```
 
-Aurora — three huge blurred blobs drifting slowly (`mix-blend-mode: screen` keeps them luminous
-without hue):
+Aurora — three large blurred blobs drifting slowly (`mix-blend-mode: screen` keeps them luminous
+without hue), providing the rich organic ambient backing for the glass panels:
 
 ```css
 .aurora {
   position: fixed;
   inset: -22%;
-  z-index: -2;
+  z-index: 0;
   overflow: hidden;
   filter: blur(84px) saturate(0.9);
   opacity: 0.34;
@@ -346,7 +388,7 @@ Noise — film-grain texture that kills gradient banding:
 .noise {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
