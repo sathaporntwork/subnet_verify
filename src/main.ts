@@ -4,14 +4,11 @@ import '@fontsource-variable/space-grotesk';
 import './style.css';
 import type { LineResult } from './lib/types';
 import { verifyAll } from './lib/verify';
+import { copyText } from './ui/clipboard';
+import { $ } from './ui/dom';
 import { renderActions, renderChips, renderResults, summarize } from './ui/render';
 import type { RenderCallbacks } from './ui/render';
-
-function $<E extends Element>(selector: string): E {
-  const node = document.querySelector<E>(selector);
-  if (!node) throw new Error(`Missing element: ${selector}`);
-  return node;
-}
+import { attachToast } from './ui/toast';
 
 const input = $<HTMLTextAreaElement>('#prefix-input');
 const countEl = $<HTMLElement>('#entry-count');
@@ -101,28 +98,6 @@ function onCancel(lineNo: number): void {
   refresh();
 }
 
-async function copyText(text: string): Promise<boolean> {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.append(ta);
-    ta.select();
-    let ok = false;
-    try {
-      ok = document.execCommand('copy');
-    } catch {
-      ok = false;
-    }
-    ta.remove();
-    return ok;
-  }
-}
-
 async function onCopyValid(): Promise<void> {
   const valid = results.flatMap((r) => (r.status === 'valid' && r.canonical ? [r.canonical] : []));
   if (valid.length === 0) return;
@@ -150,13 +125,7 @@ function updateCount(): void {
   countEl.textContent = `${n} ${n === 1 ? 'entry' : 'entries'}`;
 }
 
-let toastTimer: ReturnType<typeof setTimeout> | undefined;
-function toast(message: string): void {
-  toastEl.textContent = message;
-  toastEl.classList.add('toast--show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove('toast--show'), 2400);
-}
+const toast = attachToast(toastEl);
 
 verifyBtn.addEventListener('click', runVerify);
 

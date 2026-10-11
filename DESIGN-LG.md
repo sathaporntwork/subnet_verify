@@ -468,6 +468,9 @@ Dark translucent field; monospace when the input is data-like (codes, addresses,
   color: var(--text-mid);
   font-variant-numeric: tabular-nums;
 }
+.chip--neutral strong {
+  color: var(--text-hi);
+}
 .chip--ok strong {
   color: var(--ok);
 }
@@ -525,7 +528,136 @@ color-only):
 
 ---
 
-## 9. Toast
+## 9. Results table & alerts
+
+For record-style output: one row per input item, `#` column carries the input line number.
+A **blank result cell means "no result"** — that is a deliberate visual answer; don't fill it
+with dashes unless the product language needs it. Invalid rows get an err-tinted background and
+a reason line under the primary text.
+
+```html
+<div class="alert" hidden></div>
+<div class="table-wrap">
+  <table class="table">
+    <caption class="visually-hidden">
+      …
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Item</th>
+        <th scope="col">Result</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+```
+
+```css
+/* non-blocking warning shown between card header and table */
+.alert {
+  margin: 0 0 12px;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--warn-bd);
+  background: var(--warn-bg);
+  color: var(--warn);
+  font-size: 0.84rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.table th {
+  text-align: left;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text-low);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: top;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+.table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tr--invalid td {
+  background: rgba(255, 73, 58, 0.05);
+}
+
+.table__num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-low);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.table__ip {
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  overflow-wrap: anywhere;
+}
+
+.table__reason {
+  margin: 2px 0 0;
+  color: var(--err);
+  opacity: 0.85;
+  font-size: 0.76rem;
+}
+
+/* one result per line, green = matched */
+.table__match {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--ok);
+  white-space: nowrap;
+}
+```
+
+Inline notes under an input (per-line warnings, normalization notices):
+
+```css
+.notes {
+  display: grid;
+  gap: 2px;
+  margin-top: 10px;
+}
+.notes p {
+  margin: 0;
+  color: var(--text-low);
+  font-size: 0.78rem;
+}
+.notes__error {
+  color: var(--err);
+  opacity: 0.85;
+}
+```
+
+---
+
+## 10. Toast
 
 Transient feedback. Fixed bottom-center pill; toggle a `--show` class, auto-hide after ~2.4s.
 Pair with `role="status"` for screen readers.
@@ -563,7 +695,7 @@ Pair with `role="status"` for screen readers.
 
 ---
 
-## 10. Motion
+## 11. Motion
 
 | Name        | Spec                                                                    | Used for        |
 | ----------- | ----------------------------------------------------------------------- | --------------- |
@@ -591,7 +723,7 @@ Kill switch — always ship this block unchanged:
 
 ---
 
-## 11. Layout & responsive
+## 12. Layout, nav & responsive
 
 ```css
 .shell {
@@ -600,6 +732,65 @@ Kill switch — always ship this block unchanged:
   padding: 0 20px 36px; /* bottom padding = breathing room under the footer */
   display: grid;
   gap: 22px;
+}
+```
+
+**Page nav** — glass pill track, centered above the hero; active page gets a brighter fill:
+
+```css
+.nav {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(1.25rem, 3.5vh, 2.25rem);
+}
+
+.nav__track {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-stroke);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav__link {
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  color: var(--text-mid);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.nav__link:hover {
+  color: var(--text-hi);
+}
+.nav__link--active {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-hi);
+}
+```
+
+Mark the active link with `aria-current="page"`. On subpages use a compact hero
+(`margin-top: clamp(0.75rem, 2.5vh, 1.5rem)`).
+
+**Split editors** — two independent input cards side by side, single column on mobile:
+
+```css
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.input--short {
+  min-height: 170px; /* pair with the default 232px tall input for full-page editors */
 }
 
 @media (max-width: 640px) {
@@ -613,6 +804,13 @@ Kill switch — always ship this block unchanged:
     margin-left: 0;
     width: 100%;
   } /* action rows wrap above content */
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .table th,
+  .table td {
+    padding-inline: 0.5rem;
+  }
 }
 ```
 
@@ -621,7 +819,7 @@ group drops to its own full-width row, laid out horizontally with `space-between
 
 ---
 
-## 12. Accessibility checklist
+## 13. Accessibility checklist
 
 - [ ] `:focus-visible { outline: 2px solid var(--accent-a); outline-offset: 2px; }` — visible
       on every interactive element; inputs may swap it for a border + halo on `:focus`.
@@ -629,6 +827,8 @@ group drops to its own full-width row, laid out horizontally with `space-between
       `--text-low` (decorative only).
 - [ ] Status is never color-only — pills/chips carry a text label.
 - [ ] Toasts and live summaries get `role="status"` (implicit `aria-live="polite"`).
+- [ ] Data tables use `<th scope="col">` and a `<caption>` (a visually-hidden one is fine);
+      blank result cells are an intentional convention — say so in the page copy.
 - [ ] `prefers-reduced-motion` disables all ambient/entrance animation.
 - [ ] Decorative layers (`bg`, `aurora`, `noise`) are `aria-hidden="true"` + `pointer-events: none`.
 - [ ] `<meta name="theme-color">` matches `--bg-0`.
@@ -636,14 +836,14 @@ group drops to its own full-width row, laid out horizontally with `space-between
 
 ---
 
-## 13. New-project checklist
+## 14. New-project checklist
 
 1. `npm i -D @fontsource-variable/inter @fontsource-variable/space-grotesk @fontsource-variable/jetbrains-mono`
 2. Copy §2 tokens, §3 font stacks, §4 background stack into `style.css` (or `tokens.css`).
 3. Import fonts before the stylesheet in the entry file (§3).
-4. Add the ambient layers to `index.html` (§4) and one `.shell` wrapper (§11).
+4. Add the ambient layers to the page(s) (§4) and one `.shell` wrapper (§12).
 5. Grab the component recipes you need: card (§5), buttons (§6), input (§7), chips/pills (§8),
-   toast (§9).
+   results table & alerts (§9), toast (§10), page nav & split editors (§12).
 6. Search-replace `{{APP_NAME}}` placeholders with the product name; adjust `--bg-1` glow strength
    if the brand needs a hue.
-7. Run through §12 before shipping.
+7. Run through §13 before shipping.

@@ -1,8 +1,13 @@
 # Subnet Verify
 
-A liquid-glass dark web app to **verify IP subnet prefixes** — paste one prefix per line, hit
-**Verify**, and review the results. Broken prefixes get a one-click **Correct** / **Cancel**
-decision. 100% client-side: nothing ever leaves the browser.
+A liquid-glass dark web app with two client-side tools:
+
+- **Verify** — paste subnet prefixes (one per line), hit **Verify**, and review the results.
+  Broken prefixes get a one-click **Correct** / **Cancel** decision.
+- **Lookup** — keep reference subnets on one side and a list of IP addresses on the other; the
+  lookup table reports which subnets contain each IP (blank cell = no match).
+
+100% client-side: nothing ever leaves the browser.
 
 **Supported input (IPv4 & IPv6):**
 
@@ -25,6 +30,9 @@ IPv6 is validated on 128-bit arithmetic and rendered in RFC 5952 canonical form
 - Line-number badges jump straight to the offending line in the editor
 - **Copy valid** prefixes to clipboard, **Import .txt**, **Sample** data
 - `Ctrl`/`⌘ + Enter` to verify
+- **Subnet Lookup page** — reference subnets × IP list, per-IP match table, copy as TSV;
+  reference subnets accept the same notations and are normalized automatically (host bits
+  masked, with a note); a 5M-pair guard rejects absurd batch sizes
 - Black liquid-glass theme — silver light beams, frosted panels, film-grain texture,
   reduced-motion aware
 - Self-hosted variable fonts: **Inter** (UI), **Space Grotesk** (display), **JetBrains Mono**
@@ -66,18 +74,26 @@ The build uses relative asset paths (`base: './'`), so it works at any repositor
 ## Project structure
 
 ```
-├── index.html                    # page markup
+├── index.html                    # Verify page
+├── lookup.html                   # Lookup page (multi-page app, two Vite inputs)
 ├── public/favicon.svg            # monochrome glass droplet icon
 ├── DESIGN-LG.md                  # reusable liquid glass design system template
+├── HANDOFF.md                    # current project state for the next maintainer
 ├── .github/workflows/deploy.yml  # lint → test → build → deploy to Pages
 └── src/
-    ├── main.ts                   # app state & event wiring (+ font imports)
-    ├── style.css                 # liquid glass black theme
+    ├── main.ts                   # Verify page: app state & event wiring (+ font imports)
+    ├── style.css                 # liquid glass black theme (shared by both pages)
     ├── lib/
     │   ├── types.ts              # Parsed<T>, LineResult, PrefixStatus
     │   ├── ipv4.ts               # IPv4 parse / mask / normalize (bitwise)
     │   ├── ipv6.ts               # IPv6 parse / mask / RFC 5952 canonical (BigInt)
     │   ├── verify.ts             # per-line verify orchestration
+    │   ├── lookup.ts             # subnet normalization + IP membership matching
     │   └── __tests__/            # Vitest suites
-    └── ui/render.ts              # DOM rendering for results, chips, actions
+    ├── pages/
+    │   └── lookup.ts             # Lookup page bootstrap & event wiring
+    └── ui/
+        ├── render.ts             # DOM rendering for results, chips, actions
+        ├── dom.ts / toast.ts     # shared $ helper and toast
+        └── clipboard.ts          # clipboard with execCommand fallback
 ```

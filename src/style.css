@@ -534,6 +534,10 @@ kbd {
   font-size: 0.84rem;
 }
 
+.chip--neutral strong {
+  color: var(--text-hi);
+}
+
 .chip--ok strong {
   color: var(--ok);
 }
@@ -732,6 +736,161 @@ kbd {
   box-shadow: none;
 }
 
+/* ---------- page nav ---------- */
+
+.nav {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(1.25rem, 3.5vh, 2.25rem);
+}
+
+.nav__track {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-stroke);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav__link {
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  color: var(--text-mid);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.nav__link:hover {
+  color: var(--text-hi);
+}
+
+.nav__link--active {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-hi);
+}
+
+/* ---------- split editor layout (lookup page) ---------- */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.hero--compact {
+  margin-top: clamp(0.75rem, 2.5vh, 1.5rem);
+}
+
+.input--short {
+  min-height: 170px;
+}
+
+.notes {
+  display: grid;
+  gap: 2px;
+  margin-top: 10px;
+}
+
+.notes p {
+  margin: 0;
+  color: var(--text-low);
+  font-size: 0.78rem;
+}
+
+.notes__error {
+  color: var(--err);
+  opacity: 0.85;
+}
+
+/* ---------- results table (lookup page) ---------- */
+
+.alert {
+  margin: 0 0 12px;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--warn-bd);
+  background: var(--warn-bg);
+  color: var(--warn);
+  font-size: 0.84rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.table th {
+  text-align: left;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text-low);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: top;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tr--invalid td {
+  background: rgba(255, 73, 58, 0.05);
+}
+
+.table__num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-low);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.table__ip {
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  overflow-wrap: anywhere;
+}
+
+.table__reason {
+  margin: 2px 0 0;
+  color: var(--err);
+  opacity: 0.85;
+  font-size: 0.76rem;
+}
+
+.table__match {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--ok);
+  white-space: nowrap;
+}
+
 /* ---------- toast ---------- */
 
 .toast {
@@ -777,6 +936,15 @@ kbd {
   .toolbar {
     margin-left: 0;
     width: 100%;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .table th,
+  .table td {
+    padding-inline: 0.5rem;
   }
 
   .row {
