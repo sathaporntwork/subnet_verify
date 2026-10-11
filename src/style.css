@@ -1,3 +1,7 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/space-grotesk';
+
 /* ============================================================
    Subnet Verify — liquid glass · black monochrome · Inter/SJ
    ============================================================ */
@@ -236,7 +240,7 @@ body {
 
 .hero {
   text-align: center;
-  margin: clamp(2rem, 6vh, 3.5rem) 0 0.5rem;
+  margin: clamp(0.75rem, 2.5vh, 1.5rem) 0 0.5rem;
 }
 
 .hero__badge {
