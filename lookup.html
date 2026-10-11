@@ -23,9 +23,17 @@
       html,
       body {
         background-color: #050507;
-        color: #f5f6f8;
+        color: #f3f5f8;
       }
     </style>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('subnet-verify-theme') || 'obsidian';
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
     <title>Subnet Lookup — Prefix Toolkit</title>
   </head>
   <body>
@@ -38,12 +46,65 @@
     <div class="noise" aria-hidden="true"></div>
 
     <main class="shell">
-      <nav class="nav" aria-label="Tools">
-        <div class="nav__track">
-          <a class="nav__link" href="./index.html">Verify</a>
-          <a class="nav__link nav__link--active" href="./lookup.html" aria-current="page">Lookup</a>
+      <header class="topbar">
+        <nav class="nav" aria-label="Tools">
+          <div class="nav__track">
+            <a class="nav__link" href="./index.html">Verify</a>
+            <a class="nav__link nav__link--active" href="./lookup.html" aria-current="page"
+              >Lookup</a
+            >
+          </div>
+        </nav>
+        <div class="theme-bar" role="group" aria-label="Theme selection">
+          <div class="theme-track" id="theme-track">
+            <button
+              type="button"
+              class="theme-btn"
+              data-theme-id="obsidian"
+              title="Obsidian Silver (Default)"
+              aria-label="Obsidian Silver theme"
+            >
+              <span class="theme-btn__dot theme-btn__dot--obsidian"></span>
+            </button>
+            <button
+              type="button"
+              class="theme-btn"
+              data-theme-id="matrix"
+              title="The Matrix"
+              aria-label="The Matrix theme"
+            >
+              <span class="theme-btn__dot theme-btn__dot--matrix"></span>
+            </button>
+            <button
+              type="button"
+              class="theme-btn"
+              data-theme-id="amber"
+              title="Cyber Amber"
+              aria-label="Cyber Amber theme"
+            >
+              <span class="theme-btn__dot theme-btn__dot--amber"></span>
+            </button>
+            <button
+              type="button"
+              class="theme-btn"
+              data-theme-id="synthwave"
+              title="Neon Synthwave"
+              aria-label="Neon Synthwave theme"
+            >
+              <span class="theme-btn__dot theme-btn__dot--synthwave"></span>
+            </button>
+            <button
+              type="button"
+              class="theme-btn"
+              data-theme-id="cyan"
+              title="Electric Cyan"
+              aria-label="Electric Cyan theme"
+            >
+              <span class="theme-btn__dot theme-btn__dot--cyan"></span>
+            </button>
+          </div>
         </div>
-      </nav>
+      </header>
 
       <header class="hero hero--compact">
         <p class="hero__badge"><span class="hero__dot" aria-hidden="true"></span>Subnet Lookup</p>
@@ -138,7 +199,11 @@
       </section>
 
       <footer class="foot">
-        <p>100% client-side — your networks never leave the browser.</p>
+        <p>
+          100% client-side — your networks never leave the browser.
+          <span class="foot__sep" aria-hidden="true">·</span>
+          <span class="foot__version" id="app-version">v1.1.0</span>
+        </p>
       </footer>
     </main>
 

@@ -8,7 +8,16 @@ import { copyText } from './ui/clipboard';
 import { $ } from './ui/dom';
 import { renderActions, renderChips, renderResults, summarize } from './ui/render';
 import type { RenderCallbacks } from './ui/render';
+import { initThemePicker } from './ui/theme';
 import { attachToast } from './ui/toast';
+import { APP_VERSION } from './version';
+
+initThemePicker();
+
+const versionEl = document.getElementById('app-version');
+if (versionEl) {
+  versionEl.textContent = `v${APP_VERSION}`;
+}
 
 const input = $<HTMLTextAreaElement>('#prefix-input');
 const countEl = $<HTMLElement>('#entry-count');

@@ -59,6 +59,21 @@ npm run build      # typecheck + production build → dist/
 npm run preview    # serve the production build locally
 ```
 
+## Versioning & Releases
+
+This project follows [Semantic Versioning (SemVer 2.0.0)](https://semver.org/) and [Keep a Changelog](https://keepachangelog.com/).
+The application version is managed in `package.json` and automatically injected into the UI and build artifacts.
+
+To release a new version:
+
+```bash
+npm run version:patch   # e.g. 1.1.0 -> 1.1.1 (bug fixes)
+npm run version:minor   # e.g. 1.1.0 -> 1.2.0 (new features)
+npm run version:major   # e.g. 1.1.0 -> 2.0.0 (breaking changes)
+```
+
+See [CHANGELOG.md](./CHANGELOG.md) for full release history.
+
 ## Deploy to GitHub Pages
 
 The repo ships with a ready-made workflow (`.github/workflows/deploy.yml`):

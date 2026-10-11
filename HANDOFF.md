@@ -20,21 +20,24 @@ parseable but misaligned is **fixable** with a deterministic suggestion; unparse
 
 | Area                 | State                                                                                                   |
 | -------------------- | ------------------------------------------------------------------------------------------------------- |
-| Unit tests           | 61/61 passing (`npm test`, Vitest)                                                                      |
+| Unit tests           | 62/62 passing (`npm test`, Vitest)                                                                      |
 | Lint / format        | ESLint + Prettier clean (`npm run lint`, `npm run format:check`)                                        |
 | Build                | `npm run build` = `tsc --noEmit` + Vite MPA → `dist/` (two pages, ~2.5 kB JS gzip each + shared chunks) |
+| Versioning           | SemVer 2.0.0 (v1.1.0 in `package.json`, injected into UI footer via `vite.config.ts`)                   |
 | Browser verification | Full flow tested in a real browser (see `gui-test-screenshots/`, git-ignored)                           |
-| Git                  | One commit on `main`; **not pushed anywhere yet**                                                       |
+| Git                  | Branch `main`                                                                                           |
 | Deploy               | **Pending** — workflow exists, remote + Pages toggle do not                                             |
 
 ## 3. Where things live
 
 ```
+CHANGELOG.md                 release history following Keep a Changelog
 DESIGN-LG.md                 reusable design-system template extracted from this theme
 HANDOFF.md                   this file
 README.md                    features, dev commands, Pages deploy steps
 .github/workflows/deploy.yml lint → test → build → deploy (Pages, on push to main)
 index.html / lookup.html     the two pages (Verify / Lookup)
+src/version.ts               single source of truth for APP_VERSION
 src/lib/                     pure logic: types, ipv4, ipv6, verify, lookup (+ __tests__)
 src/pages/lookup.ts          Lookup page bootstrap & wiring
 src/ui/                      render.ts (Verify results), dom.ts, toast.ts, clipboard.ts

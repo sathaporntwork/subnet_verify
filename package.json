@@ -2,7 +2,7 @@
   "name": "subnet-verify",
   "description": "Verify and fix IP subnet prefixes — IPv4 & IPv6, fully client-side",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -15,7 +15,10 @@
     "test:watch": "vitest",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
   },
   "devDependencies": {
     "@fontsource-variable/inter": "^5.3.0",

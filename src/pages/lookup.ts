@@ -6,7 +6,16 @@ import { MAX_PAIRS, estimatePairs, lookupAll, parseAddresses, parseSubnets } fro
 import type { LookupRow } from '../lib/lookup';
 import { copyText } from '../ui/clipboard';
 import { $ } from '../ui/dom';
+import { initThemePicker } from '../ui/theme';
 import { attachToast } from '../ui/toast';
+import { APP_VERSION } from '../version';
+
+initThemePicker();
+
+const versionEl = document.getElementById('app-version');
+if (versionEl) {
+  versionEl.textContent = `v${APP_VERSION}`;
+}
 
 const subnetsInput = $<HTMLTextAreaElement>('#subnets-input');
 const ipsInput = $<HTMLTextAreaElement>('#ips-input');
