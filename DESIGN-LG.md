@@ -905,26 +905,53 @@ Glass pill track on the left of `.topbar`; active page gets a brighter fill and 
 }
 
 .nav__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.35rem 0.95rem;
   border-radius: 999px;
   color: var(--text-mid);
   text-decoration: none;
   font-size: 0.82rem;
   font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
   transition:
     color 0.15s ease,
     background 0.15s ease,
-    box-shadow 0.15s ease;
+    box-shadow 0.15s ease,
+    transform 0.12s ease;
 }
 
 .nav__link:hover {
   color: var(--text-hi);
 }
 
+.nav__link:active {
+  transform: scale(0.96);
+}
+
+.nav__link:focus {
+  outline: none;
+}
+
+.nav__link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-a);
+}
+
 .nav__link--active {
   background: var(--nav-active-bg);
   color: var(--nav-active-color);
   box-shadow: var(--nav-active-glow);
+}
+
+.nav__link--active:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-a), var(--nav-active-glow);
 }
 ```
 
