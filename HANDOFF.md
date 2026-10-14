@@ -20,7 +20,7 @@ parseable but misaligned is **fixable** with a deterministic suggestion; unparse
 
 | Area                 | State                                                                                                   |
 | -------------------- | ------------------------------------------------------------------------------------------------------- |
-| Unit tests           | 62/62 passing (`npm test`, Vitest)                                                                      |
+| Unit tests           | 65/65 passing (`npm test`, Vitest)                                                                      |
 | Lint / format        | ESLint + Prettier clean (`npm run lint`, `npm run format:check`)                                        |
 | Build                | `npm run build` = `tsc --noEmit` + Vite MPA → `dist/` (two pages, ~2.5 kB JS gzip each + shared chunks) |
 | Versioning           | SemVer 2.0.0 (v1.1.0 in `package.json`, injected into UI footer via `vite.config.ts`)                   |

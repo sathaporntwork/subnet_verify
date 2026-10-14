@@ -6,9 +6,10 @@
  * - amber: Cyberpunk / Terminal Amber
  * - synthwave: Neon Synthwave / Electric Violet
  * - cyan: Deep Ocean / Ice Cyan
+ * - crimson: Cyber Crimson / Crimson Red
  */
 
-export type ThemeId = 'obsidian' | 'matrix' | 'amber' | 'synthwave' | 'cyan';
+export type ThemeId = 'obsidian' | 'matrix' | 'amber' | 'synthwave' | 'cyan' | 'crimson';
 
 export interface ThemeMeta {
   id: ThemeId;
@@ -23,6 +24,7 @@ export const THEMES: readonly ThemeMeta[] = [
   { id: 'amber', name: 'Cyber Amber', dotColor: '#ffaa00', themeColor: '#070503' },
   { id: 'synthwave', name: 'Neon Synthwave', dotColor: '#d946ef', themeColor: '#07040d' },
   { id: 'cyan', name: 'Electric Cyan', dotColor: '#00d2ff', themeColor: '#02070e' },
+  { id: 'crimson', name: 'Crimson Red', dotColor: '#ff2a55', themeColor: '#080203' },
 ] as const;
 
 export const DEFAULT_THEME: ThemeId = 'obsidian';
@@ -30,7 +32,8 @@ const THEME_STORAGE_KEY = 'subnet-verify-theme';
 
 export function getStoredTheme(): ThemeId {
   try {
-    const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
+    const raw = localStorage.getItem(THEME_STORAGE_KEY);
+    const saved = raw === 'red' ? 'crimson' : (raw as ThemeId | null);
     if (saved && THEMES.some((t) => t.id === saved)) {
       return saved;
     }
@@ -47,8 +50,9 @@ const FALLBACK_THEME: ThemeMeta = {
   themeColor: '#050507',
 };
 
-export function applyTheme(themeId: ThemeId): void {
-  const meta: ThemeMeta = THEMES.find((t) => t.id === themeId) ?? THEMES[0] ?? FALLBACK_THEME;
+export function applyTheme(themeId: ThemeId | 'red'): void {
+  const normalizedId = themeId === 'red' ? 'crimson' : themeId;
+  const meta: ThemeMeta = THEMES.find((t) => t.id === normalizedId) ?? THEMES[0] ?? FALLBACK_THEME;
   document.documentElement.setAttribute('data-theme', meta.id);
 
   // Update theme-color meta tag for browser UI (e.g. mobile address bar)
@@ -82,7 +86,8 @@ export function initThemePicker(): void {
   container.addEventListener('click', (e) => {
     const target = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-theme-id]');
     if (!target) return;
-    const chosen = target.dataset.themeId as ThemeId;
+    const rawChosen = target.dataset.themeId;
+    const chosen = (rawChosen === 'red' ? 'crimson' : rawChosen) as ThemeId;
     if (chosen && THEMES.some((t) => t.id === chosen)) {
       applyTheme(chosen);
     }

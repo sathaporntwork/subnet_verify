@@ -13,6 +13,8 @@ describe('theme system', () => {
     expect(ids).toContain('amber');
     expect(ids).toContain('synthwave');
     expect(ids).toContain('cyan');
+    expect(ids).toContain('crimson');
+    expect(THEMES.length).toBe(6);
   });
 
   it('falls back to default theme when storage is empty', () => {

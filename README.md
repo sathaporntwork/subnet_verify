@@ -33,8 +33,10 @@ IPv6 is validated on 128-bit arithmetic and rendered in RFC 5952 canonical form
 - **Subnet Lookup page** — reference subnets × IP list, per-IP match table, copy as TSV;
   reference subnets accept the same notations and are normalized automatically (host bits
   masked, with a note); a 5M-pair guard rejects absurd batch sizes
-- Black liquid-glass theme — silver light beams, frosted panels, film-grain texture,
-  reduced-motion aware
+- Liquid-glass multi-theme palette with 6 curated color presets (**Obsidian Silver** default,
+  **The Matrix**, **Cyber Amber**, **Neon Synthwave**, **Electric Cyan**, **Crimson Red**) with
+  instant switcher and localStorage persistence — dynamic light beams, frosted panels, film-grain
+  texture, reduced-motion aware
 - Self-hosted variable fonts: **Inter** (UI), **Space Grotesk** (display), **JetBrains Mono**
   (data) — no external font requests
 - Zero runtime dependencies — pure HTML/CSS/TypeScript

@@ -124,7 +124,7 @@ Below are the default base tokens (**Obsidian Silver**):
 }
 ```
 
-### 2.1 Multi-Theme Presets (5 Curated Palettes)
+### 2.1 Multi-Theme Presets (6 Curated Palettes)
 
 To switch themes, apply `data-theme="<id>"` to `<html>`:
 
@@ -139,6 +139,7 @@ To switch themes, apply `data-theme="<id>"` to `<html>`:
 | `amber`                | **Cyber Amber**     | Polished topaz amber (`#ffaa00`)         | Warm retro-futuristic console       |
 | `synthwave`            | **Neon Synthwave**  | Electric violet (`#d946ef`) & cyan laser | Neon nightscape & vaporwave vibes   |
 | `cyan`                 | **Electric Cyan**   | Ice cyan plasma (`#00d2ff`)              | Deep ocean, crisp high-tech clarity |
+| `crimson`              | **Crimson Red**     | High-energy crimson (`#ff2a55`)          | Fiery cyber scarlet, intense laser  |
 
 Each preset overrides surface hues, glows, primary buttons, and secondary borders:
 
@@ -951,7 +952,9 @@ Glass pill track on the left of `.topbar`; active page gets a brighter fill and 
 
 .nav__link--active:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--accent-a), var(--nav-active-glow);
+  box-shadow:
+    0 0 0 2px var(--accent-a),
+    var(--nav-active-glow);
 }
 ```
 
@@ -1019,6 +1022,15 @@ A frosted glass pill housing 3D tactile jewel swatches with specular highlights 
         aria-label="Electric Cyan theme"
       >
         <span class="theme-btn__dot theme-btn__dot--cyan"></span>
+      </button>
+      <button
+        type="button"
+        class="theme-btn"
+        data-theme-id="crimson"
+        title="Crimson Red"
+        aria-label="Crimson Red theme"
+      >
+        <span class="theme-btn__dot theme-btn__dot--crimson"></span>
       </button>
     </div>
   </div>
@@ -1181,6 +1193,19 @@ A frosted glass pill housing 3D tactile jewel swatches with specular highlights 
   box-shadow:
     inset 0 1px 1.5px rgba(255, 255, 255, 0.85),
     0 0 10px rgba(0, 210, 255, 0.7);
+}
+
+.theme-btn__dot--crimson {
+  background: radial-gradient(
+    circle at 35% 30%,
+    #fecdd3 0%,
+    #ff2a55 45%,
+    #be123c 85%,
+    #4c0519 100%
+  );
+  box-shadow:
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.85),
+    0 0 10px rgba(255, 42, 85, 0.7);
 }
 ```
 

@@ -4,7 +4,7 @@
 
 /* ============================================================
    Subnet Verify — liquid glass multi-theme system
-   Supported themes: obsidian (default), matrix, amber, synthwave, cyan
+   Supported themes: obsidian (default), matrix, amber, synthwave, cyan, crimson
    ============================================================ */
 
 :root,
@@ -541,6 +541,114 @@
   --blob-2: radial-gradient(circle at 60% 40%, rgba(2, 132, 199, 0.2), transparent 66%);
   --blob-3: radial-gradient(circle at 50% 50%, rgba(3, 105, 161, 0.26), transparent 64%);
   --selection-bg: rgba(0, 210, 255, 0.28);
+}
+
+[data-theme='crimson'],
+[data-theme='red'] {
+  --theme-id: 'crimson';
+  --bg-0: #080203;
+  --bg-1: #1a060a;
+
+  --text-hi: #fff1f3;
+  --text-mid: rgba(255, 210, 218, 0.7);
+  --text-low: rgba(230, 160, 172, 0.45);
+
+  --accent-a: #ff2a55;
+  --accent-b: #170407;
+  --accent-glow: rgba(255, 42, 85, 0.25);
+
+  --accent-btn-bg: linear-gradient(180deg, #4d0a17, #170407);
+  --accent-btn-hover: linear-gradient(180deg, #660e20, #22060b);
+  --accent-btn-bd: #ff2a55;
+  --accent-btn-shadow: 0 12px 30px -10px rgba(255, 42, 85, 0.35);
+
+  --hero-title-grad: linear-gradient(118deg, #ffffff 25%, #ffa6b8 60%, #ff2a55 95%);
+  --hero-dot: #ff2a55;
+  --hero-dot-glow: 0 0 10px #ff2a55, 0 0 18px rgba(255, 42, 85, 0.65);
+  --hero-badge-bd: rgba(255, 42, 85, 0.28);
+  --hero-badge-bg: rgba(255, 42, 85, 0.08);
+  --hero-badge-color: #ffb3c1;
+
+  --ok: #30d168;
+  --ok-bg: rgba(48, 209, 104, 0.1);
+  --ok-bd: rgba(48, 209, 104, 0.34);
+
+  --warn: #ffb020;
+  --warn-bg: rgba(255, 176, 32, 0.1);
+  --warn-bd: rgba(255, 176, 32, 0.34);
+
+  --err: #ff3b30;
+  --err-bg: rgba(255, 59, 48, 0.12);
+  --err-bd: rgba(255, 59, 48, 0.38);
+
+  --glass-stroke: rgba(255, 42, 85, 0.18);
+  --glass-sheen: rgba(255, 42, 85, 0.45);
+  --card-bg: linear-gradient(160deg, rgba(255, 42, 85, 0.05), rgba(24, 6, 10, 0.65) 55%);
+  --card-shadow:
+    0 28px 70px -30px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 42, 85, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.55);
+
+  --input-bg: rgba(14, 3, 6, 0.55);
+  --input-bd: rgba(255, 42, 85, 0.2);
+  --input-focus-bd: #ff2a55;
+  --input-focus-glow:
+    0 0 0 3px rgba(255, 42, 85, 0.18), 0 0 20px rgba(255, 42, 85, 0.12),
+    inset 0 0 26px rgba(255, 42, 85, 0.04);
+
+  --scrollbar-thumb: rgba(255, 42, 85, 0.22);
+  --scrollbar-thumb-hover: rgba(255, 42, 85, 0.45);
+  --resizer-opacity: 0.4;
+
+  --nav-track-bd: rgba(255, 42, 85, 0.22);
+  --nav-track-bg: rgba(24, 6, 10, 0.65);
+  --nav-active-bg: rgba(255, 42, 85, 0.18);
+  --nav-active-color: #ff2a55;
+  --nav-active-glow: 0 0 12px rgba(255, 42, 85, 0.25);
+
+  --btn-subtle-bg: rgba(255, 42, 85, 0.07);
+  --btn-subtle-bd: rgba(255, 42, 85, 0.22);
+  --btn-subtle-hover-bg: rgba(255, 42, 85, 0.16);
+  --btn-subtle-hover-bd: rgba(255, 42, 85, 0.48);
+  --btn-subtle-glow: 0 0 14px rgba(255, 42, 85, 0.22);
+
+  --chip-neutral-bg: rgba(255, 42, 85, 0.07);
+  --chip-neutral-bd: rgba(255, 42, 85, 0.24);
+
+  --hover-row-bg: rgba(255, 42, 85, 0.06);
+  --hover-row-bd: rgba(255, 42, 85, 0.22);
+
+  --table-border: rgba(255, 42, 85, 0.22);
+  --table-border-subtle: rgba(255, 42, 85, 0.08);
+
+  --toast-bg: rgba(24, 6, 10, 0.85);
+  --toast-bd: rgba(255, 42, 85, 0.38);
+  --toast-glow: 0 0 20px rgba(255, 42, 85, 0.2);
+
+  --bg-gradient:
+    radial-gradient(900px 620px at 88% -12%, rgba(255, 42, 85, 0.12), transparent 62%),
+    radial-gradient(760px 560px at -14% 32%, rgba(220, 20, 60, 0.1), transparent 58%),
+    radial-gradient(720px 640px at 55% 118%, rgba(160, 15, 45, 0.14), transparent 62%),
+    radial-gradient(460px 320px at 5% 0%, rgba(255, 42, 85, 0.15), transparent 62%),
+    linear-gradient(165deg, var(--bg-1) 0%, #120306 45%, var(--bg-0) 100%);
+  --beam-1: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 42, 85, 0.28) 35%,
+    rgba(255, 166, 184, 0.38) 52%,
+    rgba(255, 42, 85, 0.2) 68%,
+    transparent
+  );
+  --beam-2: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 42, 85, 0.18) 38%,
+    rgba(244, 63, 94, 0.28) 55%,
+    transparent
+  );
+  --blob-1: radial-gradient(circle at 32% 32%, rgba(255, 42, 85, 0.22), transparent 66%);
+  --blob-2: radial-gradient(circle at 60% 40%, rgba(225, 29, 72, 0.2), transparent 66%);
+  --blob-3: radial-gradient(circle at 50% 50%, rgba(159, 18, 57, 0.26), transparent 64%);
+  --selection-bg: rgba(255, 42, 85, 0.28);
 }
 
 :root {
@@ -1451,7 +1559,9 @@ kbd {
 
 .nav__link--active:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--accent-a), var(--nav-active-glow);
+  box-shadow:
+    0 0 0 2px var(--accent-a),
+    var(--nav-active-glow);
 }
 
 /* ---------- theme picker ---------- */
@@ -1622,6 +1732,20 @@ kbd {
   box-shadow:
     inset 0 1px 1.5px rgba(255, 255, 255, 0.85),
     0 0 10px rgba(0, 210, 255, 0.7);
+}
+
+.theme-btn__dot--crimson,
+.theme-btn__dot--red {
+  background: radial-gradient(
+    circle at 35% 30%,
+    #fecdd3 0%,
+    #ff2a55 45%,
+    #be123c 85%,
+    #4c0519 100%
+  );
+  box-shadow:
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.85),
+    0 0 10px rgba(255, 42, 85, 0.7);
 }
 
 /* ---------- split editor layout (lookup page) ---------- */
